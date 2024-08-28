@@ -1,6 +1,6 @@
 from typing import List
 from sqlalchemy.orm import Session
-from src.example.models import Persona, Mascota
+from src.example.models import Persona, Mascota, Vehiculo, Paseo
 from src.example import schemas, exceptions
 
 # operaciones CRUD para Personas
@@ -66,3 +66,25 @@ def eliminar_mascota(db: Session, mascota_id: int) -> Mascota:
     db_mascota = leer_mascota(mascota_id)
     db_mascota.delete(db)
     return db_mascota
+
+# Operaciones CRUD para vehiculos
+
+def crear_vehiculo(db: Session, vehiculo: schemas.VehiculoCreate) -> Vehiculo:
+    return Vehiculo.create(db, marca=vehiculo.marca, modelo=vehiculo.modelo, titular_id=vehiculo.titular_id)
+
+def leer_vehiculo(db: Session, vehiculo_id: int) -> Vehiculo:
+    db_vehiculo = Vehiculo.get(db, vehiculo_id)
+    if db_vehiculo is None:
+        raise exceptions.VehiculoNoEncontrado()
+    return db_vehiculo
+
+def listar_vehiculos(db: Session) -> List[Vehiculo]:
+    return Vehiculo.get_all(db)
+
+# Operaciones CRUD para paseos
+
+def listar_paseos(db: Session) -> List[Paseo]:
+    return Paseo.get_all(db)
+
+def crear_paseo(db: Session, paseo: schemas.PaseoCreate) -> Paseo:
+    return Paseo.create(db, mascota_id=paseo.mascota_id, vehiculo_id=paseo.vehiculo_id)

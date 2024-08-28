@@ -19,6 +19,7 @@ class Persona(BaseModel):
     mascotas: Mapped[Optional[List["Mascota"]]] = relationship(
         "Mascota", back_populates="tutor"
     )
+    vehiculos: Mapped[Optional[List["Vehiculo"]]] = relationship("Vehiculo", back_populates="titular")
 
 
 class TipoMascota(StrEnum):
@@ -47,3 +48,24 @@ class Mascota(BaseModel):
     @property
     def nombre_tutor(self):
         return self.tutor.nombre
+
+class Vehiculo(BaseModel):
+    __tablename__ = "vehiculos"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    marca: Mapped[str] = mapped_column(String, index=True)
+    modelo: Mapped[int] = mapped_column(Integer, index=True)
+    titular_id: Mapped[int] = mapped_column( ForeignKey("personas.id") )
+    titular: Mapped[Persona] = relationship("Persona", back_populates="vehiculos")
+
+class Paseo(BaseModel):
+    __tablename__ = "paseos"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    fecha: Mapped[datetime] = mapped_column(DateTime, default= lambda: datetime.now(UTC))
+    
+    mascota_id: Mapped[int] = mapped_column( ForeignKey("mascotas.id") )
+    mascota: Mapped[Mascota] = relationship("Mascota")
+    
+    vehiculo_id: Mapped[int] = mapped_column( ForeignKey("vehiculos.id") )
+    vehiculo: Mapped[Vehiculo] = relationship("Vehiculo")

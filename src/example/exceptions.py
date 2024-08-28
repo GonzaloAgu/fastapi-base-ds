@@ -26,3 +26,6 @@ class TipoMascotaInvalido(ValueError):
         posibles_tipos = ", ".join(posibles_tipos)
         message = f"{ErrorCode.TIPO_MASCOTA_INVALIDO} {posibles_tipos}."
         super().__init__(message)
+
+class VehiculoNoEncontrado(NotFound):
+    DETAIL = ErrorCode.VEHICULO_NO_ENCONTRADO

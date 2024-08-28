@@ -63,3 +63,28 @@ class Mascota(MascotaBase):
     nombre_tutor: str
 
     model_config = {"from_attributes": True}
+
+class VehiculoBase(BaseModel):
+    marca: str
+    modelo: int
+    model_config = {"from_attributes": True}
+
+class VehiculoCreate(VehiculoBase):
+    titular_id: int
+
+class Vehiculo(VehiculoBase):
+    id: int
+    titular: Persona
+
+
+class PaseoBase(BaseModel):
+    mascota_id: int
+    vehiculo_id: int
+
+class PaseoCreate(PaseoBase):
+    pass
+
+class Paseo(PaseoBase):
+    id: int
+    fecha: datetime
+

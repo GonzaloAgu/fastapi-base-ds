@@ -63,3 +63,23 @@ def update_mascota(
 @router.delete("/mascotas/{mascota_id}", response_model=schemas.Mascota)
 def delete_mascota(mascota_id: int, db: Session = Depends(get_db)):
     return services.eliminar_mascota(db, mascota_id)
+
+# Rutas para vehículos
+
+@router.get("/vehiculos", response_model = list[schemas.Vehiculo])
+def get_vehiculos(db: Session = Depends(get_db)):
+    return services.listar_vehiculos(db)
+
+@router.post("/vehiculos", response_model = schemas.Vehiculo)
+def post_vehiculo(vehiculo: schemas.VehiculoCreate, db: Session = Depends(get_db)):
+    return services.crear_vehiculo(db, vehiculo)
+
+# Rutas para paseos
+
+@router.get("/paseos", response_model = list[schemas.Paseo])
+def get_paseos(db: Session = Depends(get_db)):
+    return services.listar_paseos(db)
+
+@router.post("/paseos", response_model = schemas.PaseoCreate)
+def post_paseo(paseo: schemas.PaseoCreate, db: Session = Depends(get_db)):
+    return services.crear_paseo(db, paseo)

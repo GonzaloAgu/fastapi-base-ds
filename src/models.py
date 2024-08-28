@@ -46,6 +46,8 @@ class BaseModel(Base):
     @classmethod
     def create(cls, db: Session, commit: bool = True, **kwargs):
         instance = cls(**kwargs)
+        #print(instance)
+        #import pdb; pdb.set_trace()
         return instance.save(db, commit=commit)
 
     @classmethod
