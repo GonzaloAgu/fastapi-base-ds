@@ -88,3 +88,7 @@ class Paseo(PaseoBase):
     id: int
     fecha: datetime
 
+
+class MascotaDelete(MascotaBase):
+    id: int
+    tutor_id: int
