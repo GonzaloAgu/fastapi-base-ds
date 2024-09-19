@@ -49,7 +49,7 @@ class Mascota(ModeloBase):
     def nombre_tutor(self):
         return self.tutor.nombre
 
-class Vehiculo(BaseModel):
+class Vehiculo(ModeloBase):
     __tablename__ = "vehiculos"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
@@ -58,7 +58,7 @@ class Vehiculo(BaseModel):
     titular_id: Mapped[int] = mapped_column( ForeignKey("personas.id") )
     titular: Mapped[Persona] = relationship("Persona", back_populates="vehiculos")
 
-class Paseo(BaseModel):
+class Paseo(ModeloBase):
     __tablename__ = "paseos"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
